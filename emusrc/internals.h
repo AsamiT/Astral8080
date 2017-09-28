@@ -142,7 +142,7 @@ void Emulate8080_Op(State8080* state)
 		else
 			state->cc.z = 0;
 
-		/Carry flag
+		//Carry flag
 		if (answer > 0xff)
             state->cc.cy = 1;
 		else
