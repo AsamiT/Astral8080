@@ -45,16 +45,34 @@ void Emulate8080_Op(State8080* state)
 
   switch(*opcode)
   {
-    case 0x00: break;
-    case 0x01:
+    default: UnimplementedInstruction(state); break;
+    case 0x00: break; //NOP
+    case 0x01: //LXI  B,word
       state->c = opcode[1];
       state->b = opcode[2];
       state->pc +=2;
       break;
+
+    //MOV B,*
     case 0x40: state->b = state->b; break; //MOV B,B
     case 0x41: state->b = state->c; break; //MOV B,C
     case 0x42: state->b = state->d; break; //MOV B,D
-    case 0x43: state->b = state->e; break;
+    case 0x43: state->b = state->e; break; //MOV B,E
+    case 0x44: state->b = state->h; break; //MOV B,H
+    case 0x45: state->b = state->l; break; //MOV B,L
+    case 0x46: state->b = state->m; break; //MOV B,M
+    case 0x47: state->b = state->a; break; //MOV B,A
+    //MOV C,*
+    case 0x48: state->c = state->b; break; //MOV C,B
+    case 0x49: state->c = state->c; break; //MOV C,C
+    case 0x4A: state->c = state->d; break; //MOV C,D
+    case 0x4B: state->c = state->e; break; //MOV C,E
+    case 0x4C: state->c = state->h; break; //MOV C,H
+    case 0x4D: state->c = state->l; break; //MOV C,L
+    case 0x4E: state->c = state->m; break; //MOV C,M
+    case 0x4F: state->c = state->a; break; //MOV C,A
+
+
     //we'll have to implement the full op-codes later, but I'm sure Alan could help with making the code not "line-for-line" like Emu101 wants it to be...There are seven groups and 255 opcodes (there abouts), I should really look into an easier way to execute this code without having to bother with opcodes.
   }
   state->pc+=1;
