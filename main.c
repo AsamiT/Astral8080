@@ -1,28 +1,38 @@
 /* QD8080
 Another pointless and silly attempt at emulating an 8080 processor system
 Version 0.0 Alpha 1
-Asami Tachibana */
+Asami Tachibana
 
-int main()
+File: main.c
+"Heart and soul of our program."
+28 Sept. 2017
+
+*/
+
+#include "disassembler_functions.h"
+
+int main(int argc, char**argv)
 {
-  Counter=InterruptPeriod;
-  PC=InitialPC;
-  while(CPUIsRunning)
+  FILE *f = fopen(argv[1], "rb");
+  if (f==NULL)
   {
-    OpCode=Memory[PC++];
-    Counter-=Cycles[Opcode];
-
-    switch(Opcode)
-    {
-      case Opcode1:
-      case Opcode2:
-    }
-    if(Counter <= 0)
-    {
-      /* Check for interrupts and do other cyclic tasks here */
-      Counter+=InterruptPeriod;
-      if(ExitRequired) break;
-    }
+    printf("Error: Couldn't open %s\n", argv[1]);
+    exit(1);
   }
-  return 0;
+  //Bring file into memory
+  fseek(f, 0L, SEEK_END);
+  int fsize = ftell(f);
+  fseek(f, 0L, SEEK_SET);
+
+  unsigned char *buffer=malloc(fsize);
+
+  fread(buffer, fsize, 1, f);
+  fclose(f);
+
+  int pc = 0;
+
+  while (pc < fsize)
+  {
+    pc += DA8080_Op(buffer, pc);
+  }
 }
