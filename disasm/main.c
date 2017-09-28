@@ -9,6 +9,8 @@ File: main.c
 
 */
 
+#include <stdlib.h>
+#include <stdio.h>
 #include "disassembler_functions.h"
 
 int main(int argc, char**argv)
