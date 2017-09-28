@@ -39,13 +39,22 @@ void UnimplementedInstruction(State8080* state)
   exit(1);
 }
 
-int emu8080_op(State8080* state)
+void Emulate8080_Op(State8080* state)
 {
   unsigned char *opcode = &state->memory[state->pc];
 
   switch(*opcode)
   {
-    default: UnimplementedInstruction(state); break;
+    case 0x00: break;
+    case 0x01:
+      state->c = opcode[1];
+      state->b = opcode[2];
+      state->pc +=2;
+      break;
+    case 0x40: state->b = state->b; break; //MOV B,B
+    case 0x41: state->b = state->c; break; //MOV B,C
+    case 0x42: state->b = state->d; break; //MOV B,D
+    case 0x43: state->b = state->e; break;
     //we'll have to implement the full op-codes later, but I'm sure Alan could help with making the code not "line-for-line" like Emu101 wants it to be...There are seven groups and 255 opcodes (there abouts), I should really look into an easier way to execute this code without having to bother with opcodes.
   }
   state->pc+=1;
