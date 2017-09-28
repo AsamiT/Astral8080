@@ -1,4 +1,4 @@
-/* QD8080
+/* QD8080 (disassembler)
 Another pointless and silly attempt at emulating an 8080 processor system
 Version 0.0 Alpha 1
 Asami Tachibana
