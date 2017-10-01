@@ -24,11 +24,12 @@ int main (int argc, char**argv)
 	ReadFileIntoMemoryAt(state, "invaders.g", 0x800);
 	ReadFileIntoMemoryAt(state, "invaders.f", 0x1000);
 	ReadFileIntoMemoryAt(state, "invaders.e", 0x1800);
-	
+
 	while (done == 0)
 	{
 		done = Emulate8080_Op(state);
 	}
 	
+	printf("Exiting.\n");
 	return 0;
 }

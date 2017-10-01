@@ -5,6 +5,7 @@ Asami Tachibana
 
 File: internals.h
 "Header file containing the data we need to execute 8080 code in the emulation--opcodes and the like."
+Made possible with the help of Emulator101.com; whose tutorial is invaluable to completing the code.
 28 Sept. 2017
 
 */
@@ -324,6 +325,7 @@ State8080* Init8080(void)
 {
 	State8080* state = calloc(1,sizeof(State8080));
 	state->memory = malloc(0x10000); //16 kilobytes
+	printf("16K allocated.\n");
 	return state;
 }
 
@@ -344,7 +346,7 @@ void ReadFileIntoMemoryAt(State8080* state, char* filename, uint32_t offset)
 	fclose(f);
 }
 
-void Emulate8080_Op(State8080* state)
+int Emulate8080_Op(State8080* state)
 {
   unsigned char *opcode = &state->memory[state->pc];
   
