@@ -49,11 +49,9 @@ int Parity(int x, int size)
 
 void UnimplementedInstruction(State8080* state)
 {
-  printf("Error: Unimplemented instruction\n");
-  state->pc--;
+  printf("Unimplemented instruction\n");
   DIS8080_Op(state->memory, state->pc);
   printf("\n");
-  exit(1);
 }
 
 int DIS8080_Op(unsigned char *codebuffer, int pc)
@@ -348,7 +346,9 @@ void ReadFileIntoMemoryAt(State8080* state, char* filename, uint32_t offset)
 
 int Emulate8080_Op(State8080* state)
 {
+  int cycles = 4;
   unsigned char *opcode = &state->memory[state->pc];
+  state->pc+=1;
   
   /*At the present time, opcodes are not fully implemented. It requires a bit of logical writing,
   and the developer is only so wise in discrete logic. She is also a very depressed and tired girl.
@@ -363,9 +363,17 @@ int Emulate8080_Op(State8080* state)
       state->b = opcode[2];
       state->pc +=2;
       break;
-	  
-	case 0x02:
+      
+    case 0x02: //STAX B;
+		state->b = state->a;
+		state->c = state->a;
+		break;
 		
+	case 0x03: //INX B;
+	case 0x04: //INR B;
+	case 0x05: //DCR B;
+	case 0x06: //MVI B, d2;
+	
 
     //MOV B,*
     case 0x40: state->b = state->b; break; //MOV B,B
@@ -622,5 +630,4 @@ int Emulate8080_Op(State8080* state)
 		state->a = answer,0xff;
 	}
   }
-  state->pc+=1;
 }
