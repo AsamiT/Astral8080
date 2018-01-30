@@ -20,11 +20,11 @@ int main (int argc, char**argv)
 	int vblankcycles = 0;
 	State8080* state = Init8080();
 	
-	ReadFileIntoMemoryAt(state, "invaders.rom", 0);
+	ReadFileIntoMemoryAt(state, "cpudiag.asm", 0);
 
 	while (done == 0)
 	{
-		Emulate8080_Op(state);
+		Emulate8080_Op(state, done);
 	}
 	
 	printf("Exiting.\n");
