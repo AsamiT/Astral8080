@@ -49,10 +49,10 @@ int Parity(int x, int size)
 	return (0 == (p & 0x1));
 }
 
-void UnimplementedInstruction(State8080* state, int done)
+void UnimplementedInstruction(State8080* state)
 {
   printf("Unimplemented instruction\n");
-  DA8080_Op(state->memory, state->pc, done);
+  DA8080_Op(state->memory, state->pc);
   printf("\n");
 }
 
@@ -86,7 +86,7 @@ int Emulate8080_Op(State8080* state, int done)
   int cycles = 4;
   unsigned char *opcode = &state->memory[state->pc];
   state->pc+=1;
-  DA8080_Op(state->memory, state->pc, done);
+  DA8080_Op(state->memory, state->pc);
 
   /*At the present time, opcodes are not fully implemented. It requires a bit of logical writing,
   and the developer is only so wise in discrete logic. She is also a very depressed and tired girl.
