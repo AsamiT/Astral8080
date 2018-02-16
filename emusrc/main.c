@@ -19,14 +19,14 @@ int main (int argc, char**argv)
 	int done = 0;
 	int vblankcycles = 0;
 	State8080* state = Init8080();
-	
+
 	ReadFileIntoMemoryAt(state, "cpudiag.asm", 0);
 
 	while (done == 0)
 	{
 		Emulate8080_Op(state, done);
 	}
-	
+
 	printf("Exiting.\n");
 	return 0;
 }
